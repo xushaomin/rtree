@@ -2,15 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-
-    <parent>
-        <groupId>com.github.davidmoten</groupId>
-        <artifactId>sonatype-parent</artifactId>
-        <version>0.1</version>
-    </parent>
-
+	<groupId>com.github.davidmoten</groupId>
     <artifactId>rtree</artifactId>
-    <version>0.8.0.2-SNAPSHOT</version>
+    <version>0.8.0.2.APPLE</version>
 
     <name>${project.artifactId}</name>
     <description>Java implementation of an immutable in-memory R-Tree for spatial indexing</description>
@@ -133,7 +127,7 @@
             <groupId>com.github.davidmoten</groupId>
             <artifactId>grumpy-core</artifactId>
             <version>0.2.2</version>
-            <scope>test</scope>
+            <!-- <scope>test</scope> -->
         </dependency>
 
         <dependency>
@@ -169,6 +163,12 @@
             <artifactId>kryo</artifactId>
             <version>3.0.3</version>
             <optional>true</optional>
+            <exclusions>
+            	<exclusion>
+            		<groupId>org.ow2.asm</groupId>
+					<artifactId>asm</artifactId>
+            	</exclusion>
+            </exclusions>
         </dependency>
 
     </dependencies>
@@ -259,24 +259,24 @@
                         </executions>
                     </plugin>
                     <plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.5.201505241946</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>report</id>
-						<phase>test</phase>
-						<goals>
-							<goal>report</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+						<version>0.7.5.201505241946</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>report</id>
+								<phase>test</phase>
+								<goals>
+									<goal>report</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
                 </plugins>
             </build>
         </profile>
@@ -487,4 +487,19 @@
                 </configuration> </plugin> -->
         </plugins>
     </reporting>
+    
+    <distributionManagement>
+		<repository>
+			<id>nexus-releases</id>
+			<name>Local Nexus Releases Repository</name>
+			<url>http://nexus.appleframework.com:8081/nexus/content/repositories/releases</url>
+		</repository>
+
+		<snapshotRepository>
+			<id>nexus-snapshots</id>
+			<name>Local Nexus Snapshots Repository</name>
+			<url>http://nexus.appleframework.com:8081/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
 </project>

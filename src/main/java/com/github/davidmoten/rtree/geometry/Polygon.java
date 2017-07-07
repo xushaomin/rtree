@@ -34,41 +34,55 @@ public class Polygon implements Geometry {
         return new Polygon(list);
     }*/
     
-    static Polygon create(List<String> polygonXA, List<String> polygonYA) {
+    static Polygon create(List<Double> polygonXA, List<Double> polygonYA) {
     	List<Point> list = new ArrayList<Point>(polygonXA.size());
-    	List<Double> polygonXAs = new ArrayList<>(polygonXA.size());
-    	List<Double> polygonYAs = new ArrayList<>(polygonYA.size());
     	for (int i = 0; i < polygonXA.size(); i++) {
-    		Double x = Double.parseDouble(polygonXA.get(i));
-    		Double y = Double.parseDouble(polygonYA.get(i));
+    		Double x = polygonXA.get(i);
+    		Double y = polygonYA.get(i);
     		Point p = Point.create(x, y);
     		list.add(p);
-    		polygonXAs.add(x);
-    		polygonYAs.add(y);
 		}
-        return new Polygon(list, polygonXAs, polygonYAs);
+        return new Polygon(list, polygonXA, polygonYA);
     }
     
-    public static Polygon create(String polygonXA, String polygonYA) {
-    	String[] polygonXAs = polygonXA.split(",");
-    	String[] polygonYAs = polygonXA.split(",");
-    	List<Double> polygonXAss = new ArrayList<>(polygonXA.length());
-    	List<Double> polygonYAss = new ArrayList<>(polygonYA.length());
-    	List<Point> list = new ArrayList<Point>(polygonXAs.length);
-    	for (int i = 0; i < polygonXAs.length; i++) {
-    		Double x = Double.parseDouble(polygonXAs[i]);
-    		Double y = Double.parseDouble(polygonYAs[i]);
-    		Point p = Point.create(x, y);
-    		list.add(p);
-    		polygonXAss.add(x);
-    		polygonYAss.add(y);
-		}
-    	return new Polygon(list, polygonXAss, polygonYAss);
+    private static boolean intersects(float x1, float y1, float x2, float y2, float a1, float b1, float a2, float b2) {
+        return x1 <= a2 && a1 <= x2 && y1 <= b2 && b1 <= y2;
     }
+    
+    private static float max(float a, float b) {
+        if (a < b)
+            return b;
+        else
+            return a;
+    }
+    
+    public static double distance(float x1, float y1, float x2, float y2, float a1, float b1, float a2, float b2) {
+        if (intersects(x1, y1, x2, y2, a1, b1, a2, b2)) {
+            return 0;
+        }
+        boolean xyMostLeft = x1 < a1;
+        float mostLeftX1 = xyMostLeft ? x1 : a1;
+        float mostRightX1 = xyMostLeft ? a1 : x1;
+        float mostLeftX2 = xyMostLeft ? x2 : a2;
+        double xDifference = max(0, mostLeftX1 == mostRightX1 ? 0 : mostRightX1 - mostLeftX2);
 
+        boolean xyMostDown = y1 < b1;
+        float mostDownY1 = xyMostDown ? y1 : b1;
+        float mostUpY1 = xyMostDown ? b1 : y1;
+        float mostDownY2 = xyMostDown ? y2 : b2;
+
+        double yDifference = max(0, mostDownY1 == mostUpY1 ? 0 : mostUpY1 - mostDownY2);
+
+        return Math.sqrt(xDifference * xDifference + yDifference * yDifference);
+    }
+    
 	@Override
 	public double distance(Rectangle r) {
-		return 0;
+		float x1 = this.mbr.x1();
+		float y1 = this.mbr.y1(); 
+		float x2 = this.mbr.x2();
+		float y2 = this.mbr.y2();		
+		return distance(x1, y1, x2, y2, r.x1(), r.y1(), r.x2(), r.y2());
 	}
 
 	@Override
@@ -77,29 +91,12 @@ public class Polygon implements Geometry {
 	}
 
 	@Override
-	public boolean intersects(Rectangle r) {
-		
-		/*double px1, double py1, 
-		double px2, double py2, 
-		double px3, double py3,
-		double px4, double py4
-		
-		boolean flag = false;
-		double d = (px2 - px1) * (py4 - py3) - (py2 - py1) * (px4 - px3);
-		if (d != 0.0D) {
-			double r = ((py1 - py3) * (px4 - px3) - (px1 - px3) * (py4 - py3)) / d;
-			double s = ((py1 - py3) * (px2 - px1) - (px1 - px3) * (py2 - py1)) / d;
-			if ((r >= 0.0D) && (r <= 1.0D) && (s >= 0.0D) && (s <= 1.0D)) {
-				flag = true;
-			}
-		}*/
-		
-		System.out.println("----------------------------" + r);
-		System.out.println("----------------------------" + r.x1());
-		System.out.println("----------------------------" + r.y1());
-
-		return this.contains(r.x1(), r.y1());
-
+	public boolean intersects(Rectangle r) {		
+		float x1 = this.mbr.x1();
+		float y1 = this.mbr.y1(); 
+		float x2 = this.mbr.x2();
+		float y2 = this.mbr.y2();
+		return intersects(x1, y1, x2, y2, r.x1(), r.y1(), r.x2(), r.y2());
 	}
 	
 	@Override
@@ -131,16 +128,6 @@ public class Polygon implements Geometry {
 		double linePoint1y = py;
 		double linePoint2y = py;
 
-		/*if ((polygonXA == null) || (polygonYA == null)) {
-			return false;
-		}
-
-		if (!(polygonXA.get(0).equals(polygonXA.get(polygonXA.size() - 1)))
-				|| !(polygonYA.get(0).equals(polygonYA.get(polygonYA.size() - 1)))) {
-			polygonXA.add(polygonXA.get(0));
-			polygonYA.add(polygonYA.get(0));
-		}*/
-
 		for (int i = 0; i < polygonXA.size() - 1; i++) {
 			double cx1 = polygonXA.get(i);
 			double cy1 = polygonYA.get(i);
@@ -169,7 +156,7 @@ public class Polygon implements Geometry {
 	}
     
     
-	private double Multiply(double px0, double py0, double px1, double py1, double px2, double py2) {
+	private static double Multiply(double px0, double py0, double px1, double py1, double px2, double py2) {
 		return (px1 - px0) * (py2 - py0) - (px2 - px0) * (py1 - py0);
 	}
 

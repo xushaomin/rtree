@@ -1,5 +1,7 @@
 package com.github.davidmoten.rtree.geometry;
 
+import java.util.List;
+
 import com.github.davidmoten.guavamini.annotations.VisibleForTesting;
 
 public final class Geometries {
@@ -40,8 +42,7 @@ public final class Geometries {
         return Line.create(x1, y1, x2, y2);
     }
 
-    public static Rectangle rectangleGeographic(double lon1, double lat1, double lon2,
-            double lat2) {
+    public static Rectangle rectangleGeographic(double lon1, double lat1, double lon2, double lat2) {
         return rectangleGeographic((float) lon1, (float) lat1, (float) lon2, (float) lat2);
     }
 
@@ -52,6 +53,10 @@ public final class Geometries {
             x2 += 360;
         }
         return rectangle(x1, lat1, x2, lat2);
+    }
+    
+    public static Polygon polygon(List<Double> polygonXA, List<Double> polygonYA) {
+    	return Polygon.create(polygonXA, polygonYA);
     }
 
     public static Point pointGeographic(double lon, double lat) {
