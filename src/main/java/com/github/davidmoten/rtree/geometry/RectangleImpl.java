@@ -6,6 +6,7 @@ import com.github.davidmoten.guavamini.Preconditions;
 import com.github.davidmoten.rtree.internal.util.ObjectsHelper;
 
 final class RectangleImpl implements Rectangle {
+	
     private final float x1, y1, x2, y2;
 
     private RectangleImpl(float x1, float y1, float x2, float y2) {
@@ -25,75 +26,37 @@ final class RectangleImpl implements Rectangle {
         return new RectangleImpl(x1, y1, x2, y2);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.github.davidmoten.rtree.geometry.RectangleI#x1()
-     */
     @Override
     public float x1() {
         return x1;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.github.davidmoten.rtree.geometry.RectangleI#y1()
-     */
     @Override
     public float y1() {
         return y1;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.github.davidmoten.rtree.geometry.RectangleI#x2()
-     */
     @Override
     public float x2() {
         return x2;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.github.davidmoten.rtree.geometry.RectangleI#y2()
-     */
     @Override
     public float y2() {
         return y2;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.github.davidmoten.rtree.geometry.RectangleI#area()
-     */
     @Override
     public float area() {
         return (x2 - x1) * (y2 - y1);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.github.davidmoten.rtree.geometry.RectangleI#add(com.github.davidmoten
-     * .rtree.geometry.Rectangle)
-     */
     @Override
     public Rectangle add(Rectangle r) {
         return new RectangleImpl(min(x1, r.x1()), min(y1, r.y1()), max(x2, r.x2()),
                 max(y2, r.y2()));
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.github.davidmoten.rtree.geometry.RectangleI#contains(double,
-     * double)
-     */
     @Override
     public boolean contains(double x, double y) {
         return x >= x1 && x <= x2 && y >= y1 && y <= y2;
@@ -179,13 +142,6 @@ final class RectangleImpl implements Rectangle {
             return false;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.github.davidmoten.rtree.geometry.RectangleI#intersectionArea(com.
-     * github.davidmoten.rtree.geometry.Rectangle)
-     */
     @Override
     public float intersectionArea(Rectangle r) {
         if (!intersects(r))
@@ -195,11 +151,6 @@ final class RectangleImpl implements Rectangle {
                     .area();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.github.davidmoten.rtree.geometry.RectangleI#perimeter()
-     */
     @Override
     public float perimeter() {
         return 2 * (x2 - x1) + 2 * (y2 - y1);

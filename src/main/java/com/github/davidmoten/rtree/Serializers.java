@@ -101,18 +101,17 @@ public final class Serializers {
 
         public SerializerTypedBuilder<T> method(Method method) {
             // TODO remove this check when kryo ready
-            Preconditions.checkArgument(method != Method.KRYO,
-                    "kryo serialization not implemented yet");
+            Preconditions.checkArgument(method != Method.KRYO, "kryo serialization not implemented yet");
             this.method = method;
             return this;
         }
 
         // TODO enable when ready
-        private SerializerTypedBuilder<T> kryo(Func0<Kryo> kryoFactory) {
+        /*private SerializerTypedBuilder<T> kryo(Func0<Kryo> kryoFactory) {
             this.method = Method.KRYO;
             this.kryoFactory = kryoFactory;
             return this;
-        }
+        }*/
 
         @SuppressWarnings("unchecked")
         public <S extends Geometry> Serializer<T, S> create() {

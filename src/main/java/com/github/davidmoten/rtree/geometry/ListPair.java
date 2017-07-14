@@ -10,6 +10,7 @@ import java.util.List;
  *            list type
  */
 public final class ListPair<T extends HasGeometry> {
+	
     private final Group<T> group1;
     private final Group<T> group2;
     // these non-final variable mean that this class is not thread-safe

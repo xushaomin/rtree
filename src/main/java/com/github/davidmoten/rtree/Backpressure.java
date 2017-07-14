@@ -39,8 +39,7 @@ final class Backpressure {
                 state = StackAndRequest.create(searchAfterLastInNode(state.stack), state.request);
             } else if (np.node() instanceof NonLeaf) {
                 // handle non-leaf
-                state = StackAndRequest.create(searchNonLeaf(condition, state.stack, np),
-                        state.request);
+                state = StackAndRequest.create(searchNonLeaf(condition, state.stack, np), state.request);
             } else {
                 // handle leaf
                 state = searchLeaf(condition, subscriber, state, np);

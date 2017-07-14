@@ -15,18 +15,17 @@ public final class SplitterRStar implements Splitter {
     private final Comparator<ListPair<?>> comparator;
 
     public SplitterRStar() {
-        this.comparator = new Comparator<ListPair<?>>() {
-
-            @Override
-            public int compare(ListPair<?> p1, ListPair<?> p2) {
-                //check overlap first then areaSum
-                int value = Float.compare(overlap(p1), overlap(p2));
-                if (value == 0) {
-                    return Float.compare(p1.areaSum(), p2.areaSum());
-                } else {
-                    return value;
-                }
-            }}; 
+		this.comparator = new Comparator<ListPair<?>>() {
+			@Override
+			public int compare(ListPair<?> p1, ListPair<?> p2) {
+				// check overlap first then areaSum
+				int value = Float.compare(overlap(p1), overlap(p2));
+				if (value == 0) {
+					return Float.compare(p1.areaSum(), p2.areaSum());
+				} else {
+					return value;
+				}
+			}}; 
     }
     
    
@@ -61,20 +60,20 @@ public final class SplitterRStar implements Splitter {
         return Collections.min(pairs, comparator);
     }
 
-    private static Comparator<HasGeometry> comparator(SortType sortType) {
-        switch (sortType) {
-        case X_LOWER:
-            return INCREASING_X_LOWER;
-        case X_UPPER:
-            return INCREASING_X_UPPER;
-        case Y_LOWER:
-            return INCREASING_Y_LOWER;
-        case Y_UPPER:
-            return INCREASING_Y_UPPER;
-        default:
-            throw new IllegalArgumentException("unknown SortType " + sortType);
-        }
-    }
+	private static Comparator<HasGeometry> comparator(SortType sortType) {
+		switch (sortType) {
+		case X_LOWER:
+			return INCREASING_X_LOWER;
+		case X_UPPER:
+			return INCREASING_X_UPPER;
+		case Y_LOWER:
+			return INCREASING_Y_LOWER;
+		case Y_UPPER:
+			return INCREASING_Y_UPPER;
+		default:
+			throw new IllegalArgumentException("unknown SortType " + sortType);
+		}
+	}
 
     private enum SortType {
         X_LOWER, X_UPPER, Y_LOWER, Y_UPPER;
@@ -103,7 +102,6 @@ public final class SplitterRStar implements Splitter {
     }
 
     private static final Comparator<HasGeometry> INCREASING_X_LOWER = new Comparator<HasGeometry>() {
-
         @Override
         public int compare(HasGeometry n1, HasGeometry n2) {
             return Float.compare(n1.geometry().mbr().x1(), n2.geometry().mbr().x1());
@@ -111,7 +109,6 @@ public final class SplitterRStar implements Splitter {
     };
 
     private static final Comparator<HasGeometry> INCREASING_X_UPPER = new Comparator<HasGeometry>() {
-
         @Override
         public int compare(HasGeometry n1, HasGeometry n2) {
             return Float.compare(n1.geometry().mbr().x2(), n2.geometry().mbr().x2());
@@ -119,7 +116,6 @@ public final class SplitterRStar implements Splitter {
     };
 
     private static final Comparator<HasGeometry> INCREASING_Y_LOWER = new Comparator<HasGeometry>() {
-
         @Override
         public int compare(HasGeometry n1, HasGeometry n2) {
             return Float.compare(n1.geometry().mbr().y1(), n2.geometry().mbr().y1());
@@ -127,7 +123,6 @@ public final class SplitterRStar implements Splitter {
     };
 
     private static final Comparator<HasGeometry> INCREASING_Y_UPPER = new Comparator<HasGeometry>() {
-
         @Override
         public int compare(HasGeometry n1, HasGeometry n2) {
             return Float.compare(n1.geometry().mbr().y2(), n2.geometry().mbr().y2());

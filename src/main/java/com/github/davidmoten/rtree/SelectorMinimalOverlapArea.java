@@ -11,8 +11,7 @@ public final class SelectorMinimalOverlapArea implements Selector {
 
     @Override
     public <T, S extends Geometry> Node<T, S> select(Geometry g, List<? extends Node<T, S>> nodes) {
-        return min(nodes,
-                Comparators.overlapAreaThenAreaIncreaseThenAreaComparator(g.mbr(), nodes));
+        return min(nodes, Comparators.overlapAreaThenAreaIncreaseThenAreaComparator(g.mbr(), nodes));
     }
 
 }

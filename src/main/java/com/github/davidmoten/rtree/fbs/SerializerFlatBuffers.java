@@ -47,12 +47,6 @@ public final class SerializerFlatBuffers<T, S extends Geometry> implements Seria
         return new SerializerFlatBuffers<T, S>(serializer, deserializer);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.github.davidmoten.rtree.fbs.Serializer#serialize(com.github.
-     * davidmoten.rtree.RTree, java.io.OutputStream)
-     */
     @Override
     public void write(RTree<T, S> tree, OutputStream os) throws IOException {
         FlatBufferBuilder builder = new FlatBufferBuilder();
@@ -111,12 +105,6 @@ public final class SerializerFlatBuffers<T, S extends Geometry> implements Seria
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.github.davidmoten.rtree.fbs.Serializer#deserialize(long,
-     * java.io.InputStream, com.github.davidmoten.rtree.InternalStructure)
-     */
     @Override
     public RTree<T, S> read(InputStream is, long sizeBytes, InternalStructure structure)
             throws IOException {

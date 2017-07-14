@@ -70,19 +70,18 @@ public final class SplitterQuadratic implements Splitter {
     }
 
     @VisibleForTesting
-    static <T extends HasGeometry> T getBestCandidateForGroup(List<T> list, List<T> group,
-            Rectangle groupMbr) {
-        Optional<T> minEntry = absent();
-        Optional<Float> minArea = absent();
-        for (final T entry : list) {
-            final float area = groupMbr.add(entry.geometry().mbr()).area();
-            if (!minArea.isPresent() || area < minArea.get()) {
-                minArea = of(area);
-                minEntry = of(entry);
-            }
-        }
-        return minEntry.get();
-    }
+	static <T extends HasGeometry> T getBestCandidateForGroup(List<T> list, List<T> group, Rectangle groupMbr) {
+		Optional<T> minEntry = absent();
+		Optional<Float> minArea = absent();
+		for (final T entry : list) {
+			final float area = groupMbr.add(entry.geometry().mbr()).area();
+			if (!minArea.isPresent() || area < minArea.get()) {
+				minArea = of(area);
+				minEntry = of(entry);
+			}
+		}
+		return minEntry.get();
+	}
 
     @VisibleForTesting
     static <T extends HasGeometry> Pair<T> worstCombination(List<T> items) {

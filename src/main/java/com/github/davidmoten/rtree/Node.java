@@ -24,8 +24,7 @@ public interface Node<T, S extends Geometry> extends HasGeometry {
      * @param subscriber
      *            the subscriber to report search findings to
      */
-    void searchWithoutBackpressure(Func1<? super Geometry, Boolean> criterion,
-            Subscriber<? super Entry<T, S>> subscriber);
+    void searchWithoutBackpressure(Func1<? super Geometry, Boolean> criterion, Subscriber<? super Entry<T, S>> subscriber);
 
     int count();
 

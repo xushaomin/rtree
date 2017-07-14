@@ -29,6 +29,7 @@ import rx.functions.Func1;
 public class SerializerKryo<T, S extends Geometry> implements Serializer<T, S> {
 
 	private final Func1<? super T, byte[]> serializer;
+	@SuppressWarnings("unused")
 	private final Func1<byte[], ? extends T> deserializer;
 	private final Func0<Kryo> kryoFactory;
 

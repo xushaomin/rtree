@@ -52,7 +52,6 @@ public final class Visualizer {
         g.setBackground(Color.white);
         g.clearRect(0, 0, width, height);
         g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.75f));
-
         if (tree.root().isPresent()) {
             final List<RectangleDepth> nodeDepths = getNodeDepthsSortedByDepth(tree.root().get());
             drawNode(g, nodeDepths);
@@ -60,11 +59,9 @@ public final class Visualizer {
         return image;
     }
 
-    private <T, S extends Geometry> List<RectangleDepth> getNodeDepthsSortedByDepth(
-            Node<T, S> root) {
+    private <T, S extends Geometry> List<RectangleDepth> getNodeDepthsSortedByDepth(Node<T, S> root) {
         final List<RectangleDepth> list = getRectangleDepths(root, 0);
         Collections.sort(list, new Comparator<RectangleDepth>() {
-
             @Override
             public int compare(RectangleDepth n1, RectangleDepth n2) {
                 return ((Integer) n1.getDepth()).compareTo(n2.getDepth());
@@ -73,8 +70,7 @@ public final class Visualizer {
         return list;
     }
 
-    private <T, S extends Geometry> List<RectangleDepth> getRectangleDepths(Node<T, S> node,
-            int depth) {
+    private <T, S extends Geometry> List<RectangleDepth> getRectangleDepths(Node<T, S> node, int depth) {
         final List<RectangleDepth> list = new ArrayList<RectangleDepth>();
         list.add(new RectangleDepth(node.geometry().mbr(), depth));
         if (node instanceof Leaf) {
