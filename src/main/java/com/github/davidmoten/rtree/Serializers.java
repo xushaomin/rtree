@@ -12,8 +12,8 @@ import com.esotericsoftware.kryo.Kryo;
 import com.github.davidmoten.guavamini.Preconditions;
 import com.github.davidmoten.rtree.fbs.SerializerFlatBuffers;
 import com.github.davidmoten.rtree.geometry.Geometry;
-import com.github.davidmoten.rtree.internal.Functions;
 import com.github.davidmoten.rtree.kryo.SerializerKryo;
+import com.github.davidmoten.rx.Functions;
 
 import rx.functions.Func0;
 import rx.functions.Func1;
@@ -101,18 +101,17 @@ public final class Serializers {
 
         public SerializerTypedBuilder<T> method(Method method) {
             // TODO remove this check when kryo ready
-            Preconditions.checkArgument(method != Method.KRYO,
-                    "kryo serialization not implemented yet");
+            Preconditions.checkArgument(method != Method.KRYO, "kryo serialization not implemented yet");
             this.method = method;
             return this;
         }
 
         // TODO enable when ready
-        private SerializerTypedBuilder<T> kryo(Func0<Kryo> kryoFactory) {
+        /*private SerializerTypedBuilder<T> kryo(Func0<Kryo> kryoFactory) {
             this.method = Method.KRYO;
             this.kryoFactory = kryoFactory;
             return this;
-        }
+        }*/
 
         @SuppressWarnings("unchecked")
         public <S extends Geometry> Serializer<T, S> create() {

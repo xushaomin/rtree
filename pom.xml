@@ -2,13 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-
-    <parent>
-        <groupId>com.github.davidmoten</groupId>
-        <artifactId>sonatype-parent</artifactId>
-        <version>0.1</version>
-    </parent>
-
+	<groupId>com.github.davidmoten</groupId>
     <artifactId>rtree</artifactId>
     <version>0.8.0.3.APPLE</version>
 
@@ -125,9 +119,15 @@
 
         <dependency>
             <groupId>com.github.davidmoten</groupId>
+            <artifactId>rxjava-extras</artifactId>
+            <version>0.8.0.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.davidmoten</groupId>
             <artifactId>grumpy-core</artifactId>
             <version>0.2.2</version>
-            <scope>test</scope>
+            <!-- <scope>test</scope> -->
         </dependency>
 
         <dependency>
@@ -147,7 +147,7 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>2.11.0</version>
+            <version>1.10.8</version>
             <scope>test</scope>
         </dependency>
 
@@ -163,6 +163,12 @@
             <artifactId>kryo</artifactId>
             <version>3.0.3</version>
             <optional>true</optional>
+            <exclusions>
+            	<exclusion>
+            		<groupId>org.ow2.asm</groupId>
+					<artifactId>asm</artifactId>
+            	</exclusion>
+            </exclusions>
         </dependency>
 
     </dependencies>
@@ -253,24 +259,24 @@
                         </executions>
                     </plugin>
                     <plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.5.201505241946</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>report</id>
-						<phase>test</phase>
-						<goals>
-							<goal>report</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+						<version>0.7.5.201505241946</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>report</id>
+								<phase>test</phase>
+								<goals>
+									<goal>report</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
                 </plugins>
             </build>
         </profile>
@@ -475,10 +481,22 @@
                     <aggregate>true</aggregate>
                 </configuration>
             </plugin>
+            <!-- commented this plugin out because cannot run offline (e.g. at home) -->
+            <!-- 
+            <plugin>
+            	<groupId>org.apache.maven.plugins</groupId>
+            	<artifactId>maven-changelog-plugin</artifactId> 
+                <version>${changelog.version}</version>
+                <configuration>
+                	<username>${svn.username}</username>
+                	<password>${svn.password}</password> 
+                </configuration>
+        	</plugin> 
+        	-->
         </plugins>
     </reporting>
     
-	<distributionManagement>
+    <distributionManagement>
 		<repository>
 			<id>nexus-releases</id>
 			<name>Local Nexus Releases Repository</name>
@@ -491,5 +509,5 @@
 			<url>http://nexus.appleframework.com:8081/nexus/content/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
-    
+	
 </project>
