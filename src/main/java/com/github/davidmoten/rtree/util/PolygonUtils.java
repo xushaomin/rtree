@@ -20,11 +20,11 @@ public class PolygonUtils {
 			return false;
 		}
 
-		if (!(polygonXA.get(0).equals(polygonXA.get(polygonXA.size() - 1)))
+		/*if (!(polygonXA.get(0).equals(polygonXA.get(polygonXA.size() - 1)))
 				|| !(polygonYA.get(0).equals(polygonYA.get(polygonYA.size() - 1)))) {
 			polygonXA.add(polygonXA.get(0));
 			polygonYA.add(polygonYA.get(0));
-		}
+		}*/
 
 		for (int i = 0; i < polygonXA.size() - 1; i++) {
 			double cx1 = polygonXA.get(i);

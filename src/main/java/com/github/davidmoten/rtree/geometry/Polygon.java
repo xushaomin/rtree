@@ -25,17 +25,30 @@ public class Polygon implements Geometry {
     		list.add(Point.create(polygonXA.get(i), polygonYA.get(i)));
 		}
         this.mbr = Util.mbr(list);
+        
+        //PoygonUtils里面用到这个数据
+        if (!(polygonXA.get(0).equals(polygonXA.get(polygonXA.size() - 1)))
+				|| !(polygonYA.get(0).equals(polygonYA.get(polygonYA.size() - 1)))) {
+			this.polygonXA.add(polygonXA.get(0));
+			this.polygonYA.add(polygonYA.get(0));
+		}
     }
     
     public Polygon(List<Point> list) {
-    	this.polygonXA = new ArrayList<Double>(list.size());
-        this.polygonYA = new ArrayList<Double>(list.size());
+    	polygonXA = new ArrayList<Double>(list.size());
+        polygonYA = new ArrayList<Double>(list.size());
     	this.mbr = Util.mbr(list);
     	for (Point point : list) {
 			double x = point.x();
 			double y = point.y();
-			this.polygonXA.add(x);
-	        this.polygonYA.add(y);
+			polygonXA.add(x);
+	        polygonYA.add(y);
+		}
+    	//PoygonUtils里面用到这个数据
+        if (!(polygonXA.get(0).equals(polygonXA.get(polygonXA.size() - 1)))
+				|| !(polygonYA.get(0).equals(polygonYA.get(polygonYA.size() - 1)))) {
+			polygonXA.add(polygonXA.get(0));
+			polygonYA.add(polygonYA.get(0));
 		}
     }
     
@@ -126,9 +139,7 @@ public class Polygon implements Geometry {
     }
 	
 	public boolean contains(double px, double py) {
-		List<Double> polygonXAA = new ArrayList<Double>(polygonXA);
-		List<Double> polygonYAA = new ArrayList<Double>(polygonYA);
-		return PolygonUtils.isPointInPolygon(px, py, polygonXAA, polygonYAA);
+		return PolygonUtils.isPointInPolygon(px, py, polygonXA, polygonYA);
 	}
 
 	@Override
