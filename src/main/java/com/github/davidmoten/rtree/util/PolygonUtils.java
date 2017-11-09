@@ -31,6 +31,7 @@ public class PolygonUtils {
 			double cy1 = polygonYA.get(i);
 			double cx2 = polygonXA.get(i + 1);
 			double cy2 = polygonYA.get(i + 1);
+			
 			if (isPointOnLine(px, py, cx1, cy1, cx2, cy2)) {
 				return true;
 			}

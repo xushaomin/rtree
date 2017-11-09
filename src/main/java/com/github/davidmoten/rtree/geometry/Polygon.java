@@ -16,35 +16,42 @@ public class Polygon implements Geometry {
     
     private final Rectangle mbr;
 
-    public Polygon(List<Point> list, List<Double> polygonXA, List<Double> polygonYA) {
+    public Polygon(List<Double> polygonXA, List<Double> polygonYA) {
         this.polygonXA = polygonXA;
         this.polygonYA = polygonYA;
+
+    	List<Point> list = new ArrayList<Point>(polygonXA.size());
+    	for (int i = 0; i < polygonXA.size(); i++) {
+    		list.add(Point.create(polygonXA.get(i), polygonYA.get(i)));
+		}
         this.mbr = Util.mbr(list);
     }
     
-    /*static Polygon create(List<Point> list) {
-        return new Polygon(list);
-    }*/
-    
-    /*static Polygon create(List<Double> polygonXA, List<Double> polygonYA) {
-    	List<Point> list = new ArrayList<Point>(polygonXA.size());
-    	for (int i = 0; i < polygonXA.size(); i++) {
-    		Point p = Point.create(polygonXA.get(i), polygonYA.get(i));
-    		list.add(p);
+    public Polygon(List<Point> list) {
+    	this.polygonXA = new ArrayList<Double>(list.size());
+        this.polygonYA = new ArrayList<Double>(list.size());
+    	this.mbr = Util.mbr(list);
+    	for (Point point : list) {
+			double x = point.x();
+			double y = point.y();
+			this.polygonXA.add(x);
+	        this.polygonYA.add(y);
 		}
-        return new Polygon(list);
-    }*/
-    
-    static Polygon create(List<Double> polygonXA, List<Double> polygonYA) {
-    	List<Point> list = new ArrayList<Point>(polygonXA.size());
-    	for (int i = 0; i < polygonXA.size(); i++) {
-    		Double x = polygonXA.get(i);
-    		Double y = polygonYA.get(i);
-    		Point p = Point.create(x, y);
-    		list.add(p);
-		}
-        return new Polygon(list, polygonXA, polygonYA);
     }
+    
+    static Polygon create(List<Point> list) {
+        return new Polygon(list);
+    }
+    
+	static Polygon create(List<Double> polygonXA, List<Double> polygonYA) {
+		if (null == polygonXA || null == polygonYA) {
+			return null;
+		}
+		if (polygonXA.size() != polygonYA.size()) {
+			return null;
+		}
+		return new Polygon(polygonXA, polygonYA);
+	}
     
     private static boolean intersects(float x1, float y1, float x2, float y2, float a1, float b1, float a2, float b2) {
         return x1 <= a2 && a1 <= x2 && y1 <= b2 && b1 <= y2;
@@ -119,7 +126,22 @@ public class Polygon implements Geometry {
     }
 	
 	public boolean contains(double px, double py) {
-		return PolygonUtils.isPointInPolygon(px, py, polygonXA, polygonYA);
+		List<Double> polygonXAA = new ArrayList<Double>(polygonXA);
+		List<Double> polygonYAA = new ArrayList<Double>(polygonYA);
+		return PolygonUtils.isPointInPolygon(px, py, polygonXAA, polygonYAA);
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Polygon [mbr=");
+		builder.append(mbr);
+		builder.append(", polygonXA=");
+		builder.append(polygonXA);
+		builder.append(", polygonYA=");
+		builder.append(polygonYA);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 }
