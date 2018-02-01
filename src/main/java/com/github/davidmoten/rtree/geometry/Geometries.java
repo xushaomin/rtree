@@ -58,6 +58,10 @@ public final class Geometries {
     public static Polygon polygon(List<Double> polygonXA, List<Double> polygonYA) {
     	return Polygon.create(polygonXA, polygonYA);
     }
+    
+    public static RPolygon rpolygon(List<Double> polygonXA, List<Double> polygonYA) {
+    	return RPolygon.create(polygonXA, polygonYA);
+    }
 
     public static Point pointGeographic(double lon, double lat) {
         return point(normalizeLongitude(lon), lat);

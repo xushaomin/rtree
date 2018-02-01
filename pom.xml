@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.davidmoten</groupId>
     <artifactId>rtree</artifactId>
-    <version>0.8.0.6.APPLE</version>
+    <version>0.8.0.7.APPLE</version>
 
     <name>${project.artifactId}</name>
     <description>Java implementation of an immutable in-memory R-Tree for spatial indexing</description>
