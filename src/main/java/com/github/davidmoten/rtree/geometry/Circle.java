@@ -5,6 +5,7 @@ import static com.github.davidmoten.rtree.geometry.Geometries.point;
 import com.github.davidmoten.guavamini.Objects;
 import com.github.davidmoten.guavamini.Optional;
 import com.github.davidmoten.rtree.internal.util.ObjectsHelper;
+import com.spatial4j.core.distance.DistanceUtils;
 
 public final class Circle implements Geometry {
 
@@ -83,5 +84,16 @@ public final class Circle implements Geometry {
 
     public boolean intersects(Line line) {
         return line.intersects(this);
+    }
+    
+    @Override
+    public boolean searchPoint(Point point) {
+        double lng = x;
+        double lat = y;
+        double px = point.x();
+        double py = point.y();
+        return Double.compare(lng, px) == 0 
+        		&& Double.compare(lat, py) == 0 
+        			|| DistanceUtils.distLawOfCosinesRAD(lat, lng, px, py) >= radius;
     }
 }

@@ -38,4 +38,11 @@ public interface Geometry {
     Rectangle mbr();
 
     boolean intersects(Rectangle r);
+    
+    /**
+     * Returns the result of point is in this geometry.
+     * 
+     * @return is in geometry
+     */
+    boolean searchPoint(Point point);
 }

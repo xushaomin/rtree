@@ -154,5 +154,10 @@ public class Polygon implements Geometry {
 		builder.append("]");
 		return builder.toString();
 	}
+
+	@Override
+	public boolean searchPoint(Point point) {
+		return intersects(point);
+	}
 	
 }

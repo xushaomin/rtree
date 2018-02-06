@@ -1,5 +1,8 @@
 package com.github.davidmoten.rtree.geometry;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.github.davidmoten.guavamini.Objects;
 import com.github.davidmoten.guavamini.Optional;
 import com.github.davidmoten.guavamini.Preconditions;
@@ -9,7 +12,7 @@ final class RectangleImpl implements Rectangle {
 	
     private final float x1, y1, x2, y2;
 
-    private RectangleImpl(float x1, float y1, float x2, float y2) {
+    public RectangleImpl(float x1, float y1, float x2, float y2) {
         Preconditions.checkArgument(x2 >= x1);
         Preconditions.checkArgument(y2 >= y1);
         this.x1 = x1;
@@ -173,6 +176,21 @@ final class RectangleImpl implements Rectangle {
             return a;
         else
             return b;
+    }
+    
+    public RPolygon createRPolygon() {
+        List<Point> list = new ArrayList<Point>();
+        list.add(Point.create(x1, y1));
+        list.add(Point.create(x2, y1));
+        list.add(Point.create(x2, y2));
+        list.add(Point.create(x1, y2));
+        return new RPolygon(list);
+    }
+    
+    @Override
+    public boolean searchPoint(Point point) {
+        assert point != null;
+        return point.x() >= x1 && point.x() <= x2 && point.y() >= y1 && point.y() <= y2;
     }
 
 }

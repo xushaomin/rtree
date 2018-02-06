@@ -131,5 +131,10 @@ public final class Point implements Rectangle {
     public float perimeter() {
         return 0;
     }
+    
+    @Override
+    public boolean searchPoint(Point point) {
+        return this.equals(point);
+    }
 
 }
